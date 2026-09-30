@@ -1,0 +1,45 @@
+{
+  "name": "journalapp",
+  "productName": "journalapp",
+  "version": "1.0.0",
+  "description": "journalappforlearning",
+  "main": ".vite/build/main.js",
+  "private": true,
+  "scripts": {
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish",
+    "lint": "echo \"No linting configured\""
+  },
+  "keywords": [],
+  "author": "sweng",
+  "license": "MIT",
+  "devDependencies": {
+    "@electron-forge/cli": "^7.11.2",
+    "@electron-forge/maker-deb": "^7.11.2",
+    "@electron-forge/maker-rpm": "^7.11.2",
+    "@electron-forge/maker-squirrel": "^7.11.2",
+    "@electron-forge/maker-zip": "^7.11.2",
+    "@electron-forge/plugin-auto-unpack-natives": "^7.11.2",
+    "@electron-forge/plugin-fuses": "^7.11.2",
+    "@electron-forge/plugin-vite": "^7.11.2",
+    "@electron/fuses": "^1.8.0",
+    "electron": "44.4.2",
+    "vite": "^8.3.0"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "^9.4.0",
+    "@mui/material": "^9.4.0",
+    "@vitejs/plugin-react": "^6.1.1",
+    "better-sqlite3": "^13.0.3",
+    "date-fns": "^4.4.0",
+    "electron-squirrel-startup": "^1.0.1",
+    "react": "^19.3.0",
+    "react-day-picker": "^10.0.1",
+    "react-dom": "^19.3.0",
+    "react-router": "^8.4.0"
+  }
+}
