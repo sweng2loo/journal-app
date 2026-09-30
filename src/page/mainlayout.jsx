@@ -11,7 +11,7 @@ export default function Mainlayout(){
             <AppBar position="static">
                 <Toolbar variant="dense" sx={{position:'relative', display:'flex'}}>
                  <Backbutton/>  
-                <Typography variant="h5" sx={{position:'absolute', left: '50%', transform: 'translateX(-50%)'}}>Journal App</Typography>
+                <Typography variant="h5" sx={{position:'absolute', left: '50%', transform: 'translateX(-50%)'}}>Journal</Typography>
                 </Toolbar>
             </AppBar>
 
