@@ -56,10 +56,6 @@ export default function Records(){
         
     };
 
-    function getupdateimgfile(imgfrmupload){// function that use to get the img that uploaded from the img input box
-        updateimg(imgfrmupload);
-        console.log(imgfrmupload);
-    }
     async function HandleUpdate(e){// take the file from imguploaded variable (which mean the img input uploaded) and gather input data using formdAta
         e.preventDefault();
         const file = imguploaded;
@@ -173,7 +169,7 @@ export default function Records(){
                 {editmode && //change the whole page to component that allow input
                     <form onSubmit={HandleUpdate}>
                         <Stack spacing={2}>
-                        <Box sx={{display:'flex', justifyContent:'center'}}><Imgupbtn fxtostaterefresh={previewchange} fxtogetimg={getupdateimgfile} imgselectedchange={imguploaded}/></Box>                 
+                        <Box sx={{display:'flex', justifyContent:'center'}}><Imgupbtn fxtostaterefresh={previewchange} fxtogetimg={updateimg} /></Box>                 
                         <Dateinputbox labeltext="Date" name="date" value={editrecord.EventDate} required={true} />
                         <Inputbox labeltext="Attendants" name="attendants" value={editrecord.Attendants} required={true}  />
                         <Inputbox labeltext="Particular" name="particulars" mrow='3' value={editrecord.Particulars}/>
