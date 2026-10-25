@@ -50,7 +50,7 @@ export default function Records(){
 
      function NewRecord(){ // open new record , send signal to ipc in preload.js for further action 
         if (window.anyapi){
-            window.anyapi.openChild();
+            window.anyapi.openChild('Entry');
             
         }else{console.log("something wrong");}
         

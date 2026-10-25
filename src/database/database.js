@@ -93,11 +93,51 @@ class AppDataBase{
     }
    
     LoadrecordbyYear(year){// load the data according to the year
-        const stmt = this.Jrecordbase.prepare("SELECT *, REPLACE(EventDate, 'T', ' ') AS DisDate FROM Records WHERE EventDate LIKE ?");
+        const stmt = this.Jrecordbase.prepare("SELECT *, REPLACE(EventDate, 'T', ' ') AS DisDate FROM Records WHERE EventDate LIKE ? ORDER BY DisDate DESC");
         const yearrecord = stmt.all(`${year}%`); //LIKE is use to check for similiar value in the column. LIKE need to pair with % to ensure the order of the word, if ${20}% then 2026,20sda will also count
         // basically it is saying select all the record  WHERE the value of EventDate column that have ${variable} pattern of value in front of it FROM table Records 
         // and replace the T word with "" and put the data to new column named DisDate 
         return yearrecord;
+
+    }
+
+    SearchwithCriteria(criteria){
+        let sql = "SELECT id,REPLACE(EventDate,'T',' ') AS Date, Attendants, Particulars, SpecialRemark FROM Records WHERE 1=1";
+        const value = [];
+
+        if(criteria.startDate){
+            sql += ' AND EventDate >=?';
+            value.push(criteria.startDate);
+           
+
+        }
+        if(criteria.endDate){
+            sql += ' AND EventDate <=?';
+            value.push(criteria.endDate);
+            
+        }   
+        if(criteria.Attendants){
+            sql += ' AND Attendants LIKE ?';
+            value.push(`%${criteria.Attendants}%`);
+            
+            
+        }   
+        if(criteria.Particulars){
+            sql += ' AND Particulars LIKE ?';
+            value.push(`%${criteria.Particulars}%`);
+            
+        }   
+        if(criteria.SpecialRemark){
+            sql += ' AND SpecialRemark LIKE ?';
+            value.push(`%${criteria.SpecialRemark}%`);
+        }
+
+        sql += ' ORDER BY Date DESC';
+
+
+        const stmt = this.Jrecordbase.prepare(sql);
+        const result = stmt.all(...value)
+        return result ;
 
     }
 

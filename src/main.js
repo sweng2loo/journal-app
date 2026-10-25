@@ -43,7 +43,7 @@ const createWindow = () => {
 };
 
 //open new window and lock the main window
- function makechild(){
+ function makechild(page){
 
   const zhuyao = BrowserWindow.getFocusedWindow() || BrowserWindow.getAllWindows()[0]
   const childWindow = new BrowserWindow({ 
@@ -57,12 +57,13 @@ const createWindow = () => {
     },
   });
 
+
   if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
-    childWindow.loadURL(`${MAIN_WINDOW_VITE_DEV_SERVER_URL}/#/Entry`);//load the url according to the router
+    childWindow.loadURL(`${MAIN_WINDOW_VITE_DEV_SERVER_URL}/#/${page}`);//load the url according to the router
   } else {
     childWindow.loadFile(
       path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`),//same but different method due to previous fail
-      { hash: 'Entry' }
+      { hash: page }
     );
   }// the actual content handling will be in hashrouter in renderer.jsx then direct to entry page
 
@@ -150,7 +151,7 @@ app.whenReady().then(() => {
   });
 });
 
-ipcMain.on('any-child', makechild); // since it doesnt need to return anything to main window so use ipcrenderer.send and ipcmain.on
+ipcMain.on('any-child',(event,page) => makechild(page)); // since it doesnt need to return anything to main window so use ipcrenderer.send and ipcmain.on
 
 ipcMain.on('close-child',closechild);
 

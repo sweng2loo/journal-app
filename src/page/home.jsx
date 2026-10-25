@@ -22,11 +22,19 @@ export default function Home(){
     function AddnewRecord(){
 
         if (window.anyapi){
-            window.anyapi.openChild();
+            window.anyapi.openChild('Entry');
             
         }else{console.log("something wrong");}
         
     };
+    function Searchrec(){
+
+        if (window.anyapi){
+            window.anyapi.openChild('searchrecord');
+            
+        }else{console.log("something wrong");}
+        
+    }
 
 
 
@@ -38,7 +46,7 @@ export default function Home(){
     <Box sx={{display:'flex', margin:4, justifyContent: 'space-around'}}>
     <Fab color="success" onClick={loadyearly}><CachedRounded/></Fab>
         
-    <Fab color="info" ><SearchOutlined/></Fab> {/* later need to add search function which open new window*/}
+    <Fab color="info" onClick={Searchrec}><SearchOutlined/></Fab> {/* later need to add search function which open new window*/}
     </Box>
     {/* the box below is use to make the border fall in with boxShadow, give background checker pattern with backgroundImage and backgroundSize(this is the square size) */}
     <Box sx={{minHeight:'60vh',minWidth:'95%', border:'1px', p:2, boxShadow:'inset 4px 4px 0px 4px rgba(0, 0, 0, 0.06)',borderRadius:4,  backgroundImage: 'repeating-conic-gradient(	#ffffff 0% 25%, #86fa82 25% 50%)', backgroundSize: '70px 70px'}}>

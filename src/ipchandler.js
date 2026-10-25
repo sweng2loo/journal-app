@@ -54,4 +54,6 @@ export default function Setuphandler(db){
     ipcMain.handle('home-page-load', async(event)=>{return await db.HomepageYearload()}) // for homepage enter loading the database table
 
     ipcMain.handle('load-records-by-year', async(event,year)=>{return await db.LoadrecordbyYear(year)}) //  for load the database table using year
+
+    ipcMain.handle('search-records', async(event,criteria)=> {return await db.SearchwithCriteria(criteria)})
 }

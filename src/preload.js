@@ -3,7 +3,7 @@
 import { contextBridge, ipcRenderer, webUtils } from 'electron';
 
 contextBridge.exposeInMainWorld('anyapi', {
-openChild(){ipcRenderer.send('any-child')},
+openChild(page){ipcRenderer.send('any-child',page)},
 closeChild(){ipcRenderer.send('close-child')},
 async DeleteRecord(id){ return await ipcRenderer.invoke('confirm-delete',id)},
 async AddRecords(recordinput, imgfile){ // before carry to the ipcmain, extract the imgfile(object) path with webUtils 
@@ -18,7 +18,8 @@ async UpdateRecord(updateinput, imgfile){
 async UpdateWithoutimg(updateinput){return await ipcRenderer.invoke('update-without-img',updateinput)},
 async homepageload(){return await ipcRenderer.invoke('home-page-load');},
 async LoadRecordsByYear(year){return await ipcRenderer.invoke('load-records-by-year',year)},
-} 
+async SearchRecord(criteria){return await ipcRenderer.invoke('search-records',criteria)},
 
+}
 
 );
