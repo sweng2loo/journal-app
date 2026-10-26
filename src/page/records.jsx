@@ -5,7 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 import Imgupbtn from "../component /imgupbtn";
 import Inputbox from "../component /Inputbox";
 import Dateinputbox from "../component /Dateinputbox";
-import {  useParams } from "react-router";
+import {  useLocation, useParams } from "react-router";
 import Picture from '../pic/noimg.png';
 
 
@@ -20,7 +20,7 @@ export default function Records(){
     const [editrecord, setedit] = useState(null);//the selected record in edit mode
     const [imguploaded, updateimg] = useState(null); //uploaded image in the img input box, different from the previewbox
     const { year } = useParams(); // use param return an object which you defined the key in the hashrouter route /:year
-    
+    const Squery= useLocation();// uselocation extract the object create and come with the usenavigate() such as pathname, key, state, etc
     
     //function declaration
     function toeditmode(change){
@@ -91,7 +91,13 @@ export default function Records(){
             
 //use callback to freeze the function at initial state and only allow the [recordindex] to change, if it is [] then the variable inside the function will also be freeze even it is changed at somepoint
     const loadtherecords = useCallback( async function loadrecords(targetindex = recordindex){
-        if (year != null){// this year object key is extracted useing useparam() at above declaration, if click all record from the last page, then it is null
+        const searchcriteria = Squery.state?.criteria; //extract the data get with uselocation more specificlly, in this case, we extract the criteria object inside the state key create from previous usenavigate() in mainlayout
+        if (searchcriteria != null){// if there is a searchcriteria extracted, also use to prevent loss of search result when refresh
+           const result = await window.anyapi.SearchRecord(searchcriteria);  // Search the database using the criteria send from child window through ipc > main >ipc > mainlayout > usenavigate > uselocation 
+           settable(result); // set as the table
+           setindex(targetindex)
+        }
+        else if (year != null){// this year object key is extracted useing useparam() at above declaration, if click all record from the last page, then it is null
             if(window.anyapi){loadyear(year,targetindex)};  // use the loadyear() instaead of normal loadall function
         }else{//if click all record from the last page, then the year is null
             
@@ -117,7 +123,7 @@ export default function Records(){
 
 
     //main process and page
-    useEffect(()=>{loadtherecords();},[]);// load the data and set to the database table each time enter the page. which function to load has been include if else in the loadtherecords()
+    useEffect(()=>{loadtherecords();},[location.state]);// load the data and set to the database table each time enter the page. which function to load has been include if else in the loadtherecords()
         
             
     return (<>

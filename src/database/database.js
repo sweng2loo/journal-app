@@ -101,13 +101,14 @@ class AppDataBase{
 
     }
 
-    SearchwithCriteria(criteria){
-        let sql = "SELECT id,REPLACE(EventDate,'T',' ') AS Date, Attendants, Particulars, SpecialRemark FROM Records WHERE 1=1";
-        const value = [];
+    SearchwithCriteria(criteria){ // search and form a table using criteria
+        let sql = "SELECT *, REPLACE(EventDate,'T',' ') AS DisDate FROM Records WHERE 1=1"; // sql statement that allow extention
+        // need to use SELECT * to make sure every data column is generate. if not the REPLACE will simply create extra column AS DisDate and the EventDate is not include in the result table 
+        const value = [];// store the criteria value
 
-        if(criteria.startDate){
-            sql += ' AND EventDate >=?';
-            value.push(criteria.startDate);
+        if(criteria.startDate){ // check each input exist
+            sql += ' AND EventDate >=?'; // then extend the sql statement
+            value.push(criteria.startDate); // store the value needed for later assign to the "?" according to order
            
 
         }
@@ -132,12 +133,12 @@ class AppDataBase{
             value.push(`%${criteria.SpecialRemark}%`);
         }
 
-        sql += ' ORDER BY Date DESC';
+        sql += ' ORDER BY DisDate DESC';  //finally arrange according to date
 
 
-        const stmt = this.Jrecordbase.prepare(sql);
-        const result = stmt.all(...value)
-        return result ;
+        const stmt = this.Jrecordbase.prepare(sql); // prepare sql statement for run
+        const result = stmt.all(...value)// execute the statement (...) mean unpack the array into text according to order
+        return result ; // return the result table 
 
     }
 

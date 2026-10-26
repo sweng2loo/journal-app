@@ -16,9 +16,15 @@ async UpdateRecord(updateinput, imgfile){
                 updateinput.imagepath = imgpath;
                 return await ipcRenderer.invoke('update-record',updateinput)},
 async UpdateWithoutimg(updateinput){return await ipcRenderer.invoke('update-without-img',updateinput)},
-async homepageload(){return await ipcRenderer.invoke('home-page-load');},
-async LoadRecordsByYear(year){return await ipcRenderer.invoke('load-records-by-year',year)},
-async SearchRecord(criteria){return await ipcRenderer.invoke('search-records',criteria)},
+async homepageload(){return await ipcRenderer.invoke('home-page-load');}, // for homepage initial load for show what year have records
+async LoadRecordsByYear(year){return await ipcRenderer.invoke('load-records-by-year',year)}, //load the record accoding to the year
+async SearchRecord(criteria){return await ipcRenderer.invoke('search-records',criteria)}, // get criteria from search page and send to ipcmain, wait for the result table 
+ViewInDetail(Squery){ipcRenderer.send('view-in-detail', Squery)}, // send the search criteria from search child page to the ipcmain for later use in /record page 
+ReceiveSquery(action){ // listen for the search query receive from ipcmain and send to front end mainlayout page 
+    function listenforSquery(event,Squery){action(Squery)}; //store the listener function in a variable for later stop listen purpose
+    ipcRenderer.on('view-search',listenforSquery );// then execute the listener function when ipcmain sent the signal 
+    return () => {ipcRenderer.removeListener('view-search',listenforSquery)};// create a temporary function to stop listener function and return it to frontend to enable control from frontend
+},
 
 }
 

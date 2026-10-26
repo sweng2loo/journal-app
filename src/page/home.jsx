@@ -93,7 +93,7 @@ export default function Home(){
             {/* it will have muliple same component after using map() */}
             {yearlydata?.map((yearitem,index)=>(
                 <Grid size={{ xs: 6, sm: 4, md: 2 }} sx={{borderRadius:2 }} key={index}>{/*the key attribute allow the change of data within this html component*/}
-                <ButtonBase component={Link} to={`/records/${yearitem.year}`} sx={{width: '100%', display:'block', borderRadius:2}}>
+                <ButtonBase component={Link} to={`/records/year/${yearitem.year}`} sx={{width: '100%', display:'block', borderRadius:2}}>
                                                             {/*this is object.key, the ${}allow input variable inside the `` string   */}
                     <Paper elevation={5} 
                     sx={{aspectRatio:1/1, display:'flex', flexDirection:"column", justifyContent:'center', alignItems:'center' 

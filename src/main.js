@@ -14,7 +14,7 @@ protocol.registerSchemesAsPrivileged([{
   privileges :{secure:true, supportFetchAPI:true,bypassCSP:true}
 }]);
 
-
+let mainWindow; // declare as global to enable control of child windows from main window 
 let recorddb; // declare a varible to store the database everytime app start
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (started) {
@@ -23,7 +23,7 @@ if (started) {
 
 const createWindow = () => {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
+   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
@@ -156,6 +156,25 @@ ipcMain.on('any-child',(event,page) => makechild(page)); // since it doesnt need
 ipcMain.on('close-child',closechild);
 
 ipcMain.handle('confirm-delete', deleterecord) // since it need to return respond, so use ipcrenderer.invoke and ipcMain.handle
+
+ipcMain.on('view-in-detail', (event, Squery)=>{ // wait for the view in detail signal and receive the search criteria from child window
+
+
+        if( mainWindow && !mainWindow.isDestroyed()){
+          mainWindow.webContents.send('view-search', Squery); // initiate by main.js and send through webcontents to the main window through ipc renderer
+          mainWindow.focus(); // select the main window bring to the front
+        }
+
+        const childWindow = BrowserWindow.fromWebContents(event.sender); // identify child window with event.sender (who initiate this view in detail )
+         if( childWindow && !childWindow.isDestroyed()){ //check whether the child window is there
+          childWindow.close(); // close the child window
+        } 
+          // result: send the search criteria to main window (the /mainlayout page), bring the mainwindow into control and close the child window. 
+    })
+
+
+
+
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits

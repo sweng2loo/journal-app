@@ -14,14 +14,16 @@ export default function App(){
 <>
 <HashRouter>
     <Routes>
+      {/*route for main window */}
       <Route path="/" element={<Mainlayout/>}>
         <Route index element={<Home/>}/>
         <Route path="/records" element={<Records/>}/>
-        <Route path="/records/:year" element={<Records/>}/>
+        <Route path="/records/year/:year" element={<Records/>}/>
          {/*make new route for pass data with url, the /:year can be extract with useParams() and return as an object   */}
       </Route>
+      {/*route for new child window */}
       <Route path="/Entry" element={<Entry/>}/>
-      <Route path="/searchrecord" element={<SearchRecord/>}/>
+      <Route path="/searchrecord" element={<SearchRecord/>}/> 
      
     </Routes>
 

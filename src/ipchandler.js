@@ -55,5 +55,5 @@ export default function Setuphandler(db){
 
     ipcMain.handle('load-records-by-year', async(event,year)=>{return await db.LoadrecordbyYear(year)}) //  for load the database table using year
 
-    ipcMain.handle('search-records', async(event,criteria)=> {return await db.SearchwithCriteria(criteria)})
+    ipcMain.handle('search-records', async(event,criteria)=> {return await db.SearchwithCriteria(criteria)}); // for search the database using search criteria
 }
