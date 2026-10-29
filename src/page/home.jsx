@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import FolderIcon from '@mui/icons-material/Folder';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
 import { useEffect, useState } from "react";
-import { CachedRounded, FolderCopyOutlined, SearchOutlined } from "@mui/icons-material";
+import { CachedRounded, FolderCopyOutlined, PrintOutlined, SearchOutlined } from "@mui/icons-material";
 
 
 
@@ -47,6 +47,7 @@ export default function Home(){
     <Fab color="success" onClick={loadyearly}><CachedRounded/></Fab>
         
     <Fab color="info" onClick={Searchrec}><SearchOutlined/></Fab> {/* later need to add search function which open new window*/}
+    <Fab color="info" component={Link} to="/printpage"><PrintOutlined/></Fab>
     </Box>
     {/* the box below is use to make the border fall in with boxShadow, give background checker pattern with backgroundImage and backgroundSize(this is the square size) */}
     <Box sx={{minHeight:'60vh',minWidth:'95%', border:'1px', p:2, boxShadow:'inset 4px 4px 0px 4px rgba(0, 0, 0, 0.06)',borderRadius:4,  backgroundImage: 'repeating-conic-gradient(	#ffffff 0% 25%, #86fa82 25% 50%)', backgroundSize: '70px 70px'}}>

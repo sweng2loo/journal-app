@@ -1,0 +1,18 @@
+
+.celldata {
+    font-size: 16px !important;
+    border-bottom: 1px solid black !important;
+    border-left: 1px solid black; 
+    /* do not need "!important" is simply because the mui component dont use btmborder for this component
+    so css will not be takeover by original mui properties*/
+    font-family: 'Times New Roman', Times, serif !important;
+    padding: 10px !important;
+    text-align: left !important;
+    vertical-align: top !important;
+    
+}
+
+.celldata .sp-remark{
+      font-size: 12px !important;
+
+}

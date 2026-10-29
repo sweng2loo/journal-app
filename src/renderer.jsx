@@ -6,6 +6,8 @@ import Records from './page/records';
 import SearchRecord from './page/searchrecord';
 
 import Entry from './page/Entry';
+import PrintPage from './page/printpage';
+import './css/printpage.css'
 
 
 export default function App(){
@@ -20,6 +22,7 @@ export default function App(){
         <Route path="/records" element={<Records/>}/>
         <Route path="/records/year/:year" element={<Records/>}/>
          {/*make new route for pass data with url, the /:year can be extract with useParams() and return as an object   */}
+        <Route path="/printpage" element={<PrintPage/>}/>
       </Route>
       {/*route for new child window */}
       <Route path="/Entry" element={<Entry/>}/>

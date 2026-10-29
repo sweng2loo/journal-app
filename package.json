@@ -33,6 +33,7 @@
     "@emotion/styled": "^11.14.1",
     "@mui/icons-material": "^9.4.0",
     "@mui/material": "^9.4.0",
+    "@mui/x-data-grid": "^9.16.0",
     "@vitejs/plugin-react": "^6.1.1",
     "better-sqlite3": "^13.0.3",
     "date-fns": "^4.4.0",
