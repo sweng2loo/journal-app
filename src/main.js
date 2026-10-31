@@ -17,6 +17,7 @@ protocol.registerSchemesAsPrivileged([{
 let mainWindow; // declare as global to enable control of child windows from main window 
 let recorddb; // declare a varible to store the database everytime app start
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
+let ActiveChildWindow;
 if (started) {
   app.quit();
 }
@@ -45,6 +46,12 @@ const createWindow = () => {
 //open new window and lock the main window
  function makechild(page ,color = '#FFFFFF'){
 
+  if(ActiveChildWindow){
+    if (ActiveChildWindow.isMinimized()) ActiveChildWindow.restore();
+    ActiveChildWindow.focus();
+    return ActiveChildWindow;
+  }
+
   const zhuyao = BrowserWindow.getFocusedWindow() || BrowserWindow.getAllWindows()[0]
   const childWindow = new BrowserWindow({ 
     width: 600, 
@@ -57,6 +64,11 @@ const createWindow = () => {
       preload: path.join(__dirname, 'preload.js'),
     },
   });
+
+
+  ActiveChildWindow = childWindow;
+
+  childWindow.on('closed',()=>{ActiveChildWindow = null;})
 
 
   if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
