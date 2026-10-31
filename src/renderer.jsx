@@ -28,7 +28,9 @@ export default function App(){
       {/*route for new child window */}
       <Route path="/Entry" element={<Entry/>}/>
       <Route path="/searchrecord" element={<SearchRecord/>}/> 
-      <Route path="/printpreviewpage" element={<PrintPreviewPage/>}/>
+      {/*<Route path="/printpreviewpage" element={<PrintPreviewPage/>}/>
+        discarded due to improper printpreview page, can be reconnect by enable it
+      */}
      
     </Routes>
 

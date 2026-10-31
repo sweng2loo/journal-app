@@ -119,7 +119,8 @@ async function deleterecord(event, id){
 
   return false; // nothing happen if respond 0 (no)
 
-}  
+}
+
 
 
 
@@ -187,13 +188,16 @@ ipcMain.on('view-in-detail', (event, Squery)=>{ // wait for the view in detail s
           // result: send the search criteria to main window (the /mainlayout page), bring the mainwindow into control and close the child window. 
     })
 
-  ipcMain.on('print-preview',(event, page, report)=>{
+
+  
+
+  /*ipcMain.on('print-preview',(event, page, report)=>{ //open child window then send the report data to the childwindow when it finish load
     let prevwindow = makechild(page,'#525659');
     
     prevwindow.webContents.on('did-finish-load',()=>{
       prevwindow.webContents.send('preview-report',report);
     })
-  })
+  })*/ //discarded due to not needed a new childwindow to preview, unless use iframe to proper show the page break
     
 
 

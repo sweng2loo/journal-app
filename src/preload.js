@@ -25,12 +25,15 @@ ReceiveSquery(action){ // listen for the search query receive from ipcmain and s
     ipcRenderer.on('view-search',listenforSquery );// then execute the listener function when ipcmain sent the signal 
     return () => {ipcRenderer.removeListener('view-search',listenforSquery)};// create a temporary function to stop listener function and return it to frontend to enable control from frontend
 },
-Printpreview(page, report){ipcRenderer.send('print-preview', page, report)},
-waitforpreview(whenreceived){
-    function listenforpreview(event,report){whenreceived(report)};
+async SaveAsPDF(){ return await ipcRenderer.invoke('save-as-pdf')},
+
+//this two function is discarded as related to child page print preview which is current unnecessary due to no page break display
+//Printpreview(page, report){ipcRenderer.send('print-preview', page, report)}, // request to open child page for preview, send the report and criteria over ipcMain
+/*waitforpreview(whenreceived){ // receive the preview report and load it over the child window to preview
+    function listenforpreview(event,report){whenreceived(report)}; //declare the function for listener
     ipcRenderer.on('preview-report', listenforpreview);
-    return () => {ipcRenderer.removeListener('preveiw-report',listenforpreview)};
-},
+    return () => {ipcRenderer.removeListener('preveiw-report',listenforpreview)}; give stop the listener function for the page to use
+},*/
 
 
 }

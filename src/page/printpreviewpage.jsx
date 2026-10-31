@@ -3,7 +3,9 @@ import PrintPreview from "../component /printpreview";
 import { useEffect, useState } from "react";
 import { AppBar, Container, IconButton, Slide, Toolbar, Typography, useScrollTrigger } from "@mui/material";
 import { PrintOutlined } from "@mui/icons-material";
-  
+
+
+// discarded due to improper print preview page, may need to use iframe to properly display print preview
 export default function PrintPreviewPage(){
     const [preview, setpreview] = useState(null);
     const [otherinfo, setotherinfo] = useState(null);

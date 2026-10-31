@@ -23,6 +23,7 @@ export default function PrintPage(){
         {field:"SpecialRemark", headerName:"Sp remark", maxWidth:100, minWidth:10},
     ] 
     const paginationModel = {pageSize:4 }
+    const [isSaving, Saving] = useState(false);
 
     async function Search(e){ // search with input criteria
             e.preventDefault();
@@ -46,9 +47,32 @@ export default function PrintPage(){
     function Resetresult(){
         setresult(null);
     }
-    
 
-    function fnPrintPreview(){
+    async function SavePdf(e){
+        e.preventDefault();
+        
+        if(isSaving){return}
+        
+        Saving(true);
+
+        if(window.anyapi){
+            try{
+                const result = await window.anyapi.SaveAsPDF();
+                if(result.success){
+                    alert("Save sucessfully.");
+                }
+                else { alert("Failure!");}
+
+            }catch(err){
+                console.error(err);
+            }
+        }
+
+        Saving(false);
+    }
+    
+    //this is for the new child page print preview, discarded due to the page cant properly display page break thus, pointles to have
+    /*function fnPrintPreview(){ 
         const report = {printdata: dataresult,
                         reportinfo: Criteria
         }
@@ -57,7 +81,7 @@ export default function PrintPage(){
         if(window.anyapi){
             window.anyapi.Printpreview("printpreviewpage", report);
         }
-    }
+    }*/
 
 
 
@@ -74,11 +98,11 @@ export default function PrintPage(){
                 
                 <Inputbox labeltext="Attendants" name="attendants"/>
                 <Inputbox labeltext="Particulars" name="particulars"/>
-                <Inputbox labeltext="Special Remark" name="special remarks"/>
+                <Inputbox labeltext="Special Remark" name="specialremarks"/>
                 <Box sx={{display:'flex', justifyContent:"space-between", maxWidth:'100%',minWidth:0}}>
                     <Button variant="contained" onClick={Resetresult} type="reset">Reset</Button>
                     <Box sx={{display:'flex', gap:2}}>
-                        <Button variant="contained" onClick={fnPrintPreview}disabled={dataresult === null || dataresult.length === 0}>Print Preview</Button>
+                        <Button variant="contained" onClick={SavePdf}disabled={dataresult === null || dataresult.length === 0}>Save as PDF</Button>
                         <Button variant="contained" type="submit" sx={{fontSize:'clamp(10px, 2vw, 14px)', minWidth:'auto', px: 'clamp(12px, 2vw, 16px)',}}>Search</Button>
                     </Box>
                 </Box>

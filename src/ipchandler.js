@@ -1,4 +1,4 @@
-import { app, ipcMain } from 'electron';
+import { app, BrowserWindow, dialog, ipcMain } from 'electron';
 import path from 'node:path';
 import fs from 'fs';
 import Copyimgfile from './filerelatedfunction/copyimgfile';
@@ -56,4 +56,34 @@ export default function Setuphandler(db){
     ipcMain.handle('load-records-by-year', async(event,year)=>{return await db.LoadrecordbyYear(year)}) //  for load the database table using year
 
     ipcMain.handle('search-records', async(event,criteria)=> {return await db.SearchwithCriteria(criteria)}); // for search the database using search criteria
+
+    ipcMain.handle('save-as-pdf',async(event)=>{
+        const win = BrowserWindow.fromWebContents(event.sender);
+         // if declared with {filePath}, it mean temporary nameless object but with filePath as key
+        // also the dialog return an object with 2 key {filePath: ?? , canceled:??} 
+        // so it is strictly filePath as key or else it will not work
+
+            const  Pdfpath = await dialog.showSaveDialog(win, { 
+               
+              title: 'Save As PDF',
+              defaultPath: 'journalreport.pdf',
+              filters: [{name:'PDF file',extensions:["pdf"]}]
+        
+            });
+        
+            if (!Pdfpath.filePath) {return {success:false, reason:'cancel'};
+          }
+            const data = await win.webContents.printToPDF({
+                preferCSSPageSize: true
+            });
+        
+            await fs.promises.writeFile(Pdfpath.filePath, data);
+
+            return {success: true};
+
+
+    })
+
+
+
 }
