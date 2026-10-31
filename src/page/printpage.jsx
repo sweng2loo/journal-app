@@ -74,7 +74,7 @@ export default function PrintPage(){
                 
                 <Inputbox labeltext="Attendants" name="attendants"/>
                 <Inputbox labeltext="Particulars" name="particulars"/>
-                <Inputbox labeltext="Special Remark" name="special remarks"/>
+                <Inputbox labeltext="Special Remark" name="specialremarks"/>
                 <Box sx={{display:'flex', justifyContent:"space-between", maxWidth:'100%',minWidth:0}}>
                     <Button variant="contained" onClick={Resetresult} type="reset">Reset</Button>
                     <Box sx={{display:'flex', gap:2}}>
