@@ -1,18 +1,113 @@
 
-.celldata {
-    font-size: 16px !important;
-    border-bottom: 1px solid black !important;
-    border-left: 1px solid black; 
-    /* do not need "!important" is simply because the mui component dont use btmborder for this component
-    so css will not be takeover by original mui properties*/
-    font-family: 'Times New Roman', Times, serif !important;
-    padding: 10px !important;
-    text-align: left !important;
-    vertical-align: top !important;
+
+
+.on-paper {
+    background:white !important;
+    min-height: 29.7cm !important;
+    width: 21cm;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.15) !important;
+    align-items: center !important;
+    padding: 2cm !important; 
+    margin-top: 20px !important;
     
-}
+    
 
-.celldata .sp-remark{
-      font-size: 12px !important;
+        & .title {
+            text-align: center !important;
+            margin-bottom: 2cm !important;
+
+            & .titlelabel {
+                font-size: 40px !important;
+                font-weight: bold !important;
+                font-family: 'Times New Roman', Times, serif !important;
+            }
+
+        }
+
+        & .reportdata {
+            font-size: 16px !important;
+            font-family: 'Times New Roman', Times, serif !important;
+            display: flex !important;
+            justify-content: space-between !important;          
+                    }
 
 }
+        
+.on-paper .table {
+    border-top: 1px solid black !important;
+    border-right: 1px solid black !important;
+
+    & .headers {
+        font-size: 16px !important;
+        border-bottom: 1px solid black !important;
+        border-left: 1px solid black; 
+        font-family: 'Times New Roman', Times, serif !important;
+        padding: 5px;
+        font-weight: bold;
+        height: 5px !important;
+
+
+    }
+
+    & .celldata {
+        font-size: 16px !important;
+        border-bottom: 1px solid black !important;
+        border-left: 1px solid black; 
+        /* do not need "!important" is simply because the mui component dont use btmborder for this component
+        so css will not be takeover by original mui properties*/
+        font-family: 'Times New Roman', Times, serif !important;
+        padding: 8px !important;
+        text-align: left !important;
+        vertical-align: top !important;
+        
+        &.sp-remark{
+            font-size: 12px !important;
+
+            }
+        }
+    }
+.on-paper .Endnote {
+        display: flex !important;
+        justify-content: center !important;
+        margin-top: 8px;
+
+        & .Endlabel {
+            font-family: 'Times New Roman', Times, serif  !important;
+            font-size: 18px;
+        }
+    }     
+
+
+    @media print {
+
+        .no-print {
+            display: none !important;
+
+        }
+
+        .hide-it {
+            display: contents !important;
+        }
+
+        
+        @page {
+            size: A4;
+            margin: 2cm; 
+        }
+
+
+        .on-paper{
+            box-shadow: none !important;
+            padding:1px !important;
+            margin-top: 0 !important;
+        }
+
+
+        .row-data {
+            break-inside: avoid !important ;
+        }
+
+      
+
+
+    }

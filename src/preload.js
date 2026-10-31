@@ -25,7 +25,16 @@ ReceiveSquery(action){ // listen for the search query receive from ipcmain and s
     ipcRenderer.on('view-search',listenforSquery );// then execute the listener function when ipcmain sent the signal 
     return () => {ipcRenderer.removeListener('view-search',listenforSquery)};// create a temporary function to stop listener function and return it to frontend to enable control from frontend
 },
+Printpreview(page, report){ipcRenderer.send('print-preview', page, report)},
+waitforpreview(whenreceived){
+    function listenforpreview(event,report){whenreceived(report)};
+    ipcRenderer.on('preview-report', listenforpreview);
+    return () => {ipcRenderer.removeListener('preveiw-report',listenforpreview)};
+},
+
 
 }
+
+
 
 );

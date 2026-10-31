@@ -23,7 +23,7 @@ class AppDataBase{
             Attendants TEXT, 
             SpecialRemark TEXT,
             imgpath TEXT
-            )`) /
+            )`) 
         console.log("Database table created")
         };
 

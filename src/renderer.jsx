@@ -8,6 +8,7 @@ import SearchRecord from './page/searchrecord';
 import Entry from './page/Entry';
 import PrintPage from './page/printpage';
 import './css/printpage.css'
+import PrintPreviewPage from './page/printpreviewpage';
 
 
 export default function App(){
@@ -27,6 +28,7 @@ export default function App(){
       {/*route for new child window */}
       <Route path="/Entry" element={<Entry/>}/>
       <Route path="/searchrecord" element={<SearchRecord/>}/> 
+      <Route path="/printpreviewpage" element={<PrintPreviewPage/>}/>
      
     </Routes>
 

@@ -43,7 +43,7 @@ const createWindow = () => {
 };
 
 //open new window and lock the main window
- function makechild(page){
+ function makechild(page ,color = '#FFFFFF'){
 
   const zhuyao = BrowserWindow.getFocusedWindow() || BrowserWindow.getAllWindows()[0]
   const childWindow = new BrowserWindow({ 
@@ -52,6 +52,7 @@ const createWindow = () => {
     parent: zhuyao, 
     modal: true,        
     show: false,
+    backgroundColor: color,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     },
@@ -68,6 +69,8 @@ const createWindow = () => {
   }// the actual content handling will be in hashrouter in renderer.jsx then direct to entry page
 
   childWindow.once('ready-to-show', () => childWindow.show());// show the child window when ready
+
+  return childWindow;
 }
 //close the new window
 function closechild(event){
@@ -171,6 +174,15 @@ ipcMain.on('view-in-detail', (event, Squery)=>{ // wait for the view in detail s
         } 
           // result: send the search criteria to main window (the /mainlayout page), bring the mainwindow into control and close the child window. 
     })
+
+  ipcMain.on('print-preview',(event, page, report)=>{
+    let prevwindow = makechild(page,'#525659');
+    
+    prevwindow.webContents.on('did-finish-load',()=>{
+      prevwindow.webContents.send('preview-report',report);
+    })
+  })
+    
 
 
 

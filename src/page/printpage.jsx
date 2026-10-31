@@ -1,4 +1,4 @@
-import { Box, Button, Container, Stack,} from "@mui/material";
+import { Box, Button, Container, Stack, Typography,} from "@mui/material";
 import Dateinputbox from "../component /Dateinputbox";
 import Inputbox from "../component /Inputbox";
 import { useState } from "react";
@@ -22,7 +22,7 @@ export default function PrintPage(){
         {field:"Particulars", headerName:"Particulars", maxWidth:200, minWidth:10},
         {field:"SpecialRemark", headerName:"Sp remark", maxWidth:100, minWidth:10},
     ] 
-    const paginationModel = {pageSize:3 }
+    const paginationModel = {pageSize:4 }
 
     async function Search(e){ // search with input criteria
             e.preventDefault();
@@ -48,11 +48,22 @@ export default function PrintPage(){
     }
     
 
+    function fnPrintPreview(){
+        const report = {printdata: dataresult,
+                        reportinfo: Criteria
+        }
+
+      
+        if(window.anyapi){
+            window.anyapi.Printpreview("printpreviewpage", report);
+        }
+    }
+
 
 
     return(
         <>
-        <Container>
+        <Container className="hide-it">
         <Box className="no-print" sx={{display:'flex', justifyContent:'center',gap:3}}>
             <Box sx={{background:'white', p:2, boxShadow:4, maxWidth:'40vw',minWidth:'300px'}}>
                 <form onSubmit={Search}>
@@ -67,7 +78,7 @@ export default function PrintPage(){
                 <Box sx={{display:'flex', justifyContent:"space-between", maxWidth:'100%',minWidth:0}}>
                     <Button variant="contained" onClick={Resetresult} type="reset">Reset</Button>
                     <Box sx={{display:'flex', gap:2}}>
-                        <Button variant="contained" disabled={dataresult === null || dataresult.length === 0}>Print Preview</Button>
+                        <Button variant="contained" onClick={fnPrintPreview}disabled={dataresult === null || dataresult.length === 0}>Print Preview</Button>
                         <Button variant="contained" type="submit" sx={{fontSize:'clamp(10px, 2vw, 14px)', minWidth:'auto', px: 'clamp(12px, 2vw, 16px)',}}>Search</Button>
                     </Box>
                 </Box>
@@ -76,12 +87,16 @@ export default function PrintPage(){
                 </form>
             </Box>
             <Box sx={{background:'white', boxShadow:4, overflow:'auto',flexShrink:1,minWidth:"150px"}}>
-                <DataGrid rows={dataresult} columns={datacolumn} initialState={{pagination:{paginationModel}}} pageSizeOptions={[3]} slotProps={{pagination:{labelRowsPerPage:""}}}/>
+                <DataGrid rows={dataresult} columns={datacolumn} initialState={{pagination:{paginationModel}}} pageSizeOptions={[4]} slotProps={{pagination:{labelRowsPerPage:""}}}/>
             </Box>
         </Box>
-        <Box sx={{display:'flex', justifyContent:"center",margin:1, background:"darkgrey", p:2, minHeight: "600px"}}>
+        <Box className="hide-it" sx={{display:'flex',minHeight:'29.7cm', justifyContent:'center'}}>
             {dataresult?.length >0 && <PrintPreview datatable={dataresult} reportdata={Criteria}/>}
+            
+        
         </Box>
+        
+
         </Container>
         </>
     );
