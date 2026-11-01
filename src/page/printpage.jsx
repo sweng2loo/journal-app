@@ -13,17 +13,17 @@ import PrintPreview from "../component /printpreview";
 
 export default function PrintPage(){
     
-    const [dataresult, setresult] = useState(null);
-    const [Criteria, setcriteria] = useState(null);
-    const datacolumn = [
+    const [dataresult, setresult] = useState(null); // the search result 
+    const [Criteria, setcriteria] = useState(null); // the search criteria for setting the report range data also
+    const datacolumn = [ // for the datagrid use, it required unique field as key, and valueGetter allow for customize value for this field
         {field:"numbering", headerName:"#",maxWidth:30, minWidth:10,valueGetter: (value, row) => dataresult.indexOf(row) + 1},
         {field:"DisDate", headerName:"Date", maxWidth:120, minWidth:10}, 
         {field:"Attendants", headerName:"Attendants", maxWidth:100, minWidth:10},
         {field:"Particulars", headerName:"Particulars", maxWidth:200, minWidth:10},
         {field:"SpecialRemark", headerName:"Sp remark", maxWidth:100, minWidth:10},
     ] 
-    const paginationModel = {pageSize:4 }
-    const [isSaving, Saving] = useState(false);
+    const paginationModel = {pageSize:4 }// for mui datagrid use, allow the number of record show each page
+    const [isSaving, Saving] = useState(false); // state whether the system is saving, use for prevent multiple execution when click save
 
     async function Search(e){ // search with input criteria
             e.preventDefault();
@@ -44,34 +44,37 @@ export default function PrintPage(){
 
 
 
-    function Resetresult(){
+    function Resetresult(){// clear search result , the clear form is implement inside <form> <button type='reset'> 
         setresult(null);
     }
 
-    async function SavePdf(e){
-        e.preventDefault();
+    async function SavePdf(e){ // save the result as pdf by using BrowserWindow.Webcontents.printToPDF in main.js
+        e.preventDefault(); //prevent browser any automatic default action
         
-        if(isSaving){return}
-        
-        Saving(true);
+        if(isSaving){return} //check if the status is currently saving file 
+                                // if yes, nothing happen (to prevent multiple execute due to multiple click)
+        Saving(true); // set to nowSaving to prevent multiple click execute
 
         if(window.anyapi){
-            try{
-                const result = await window.anyapi.SaveAsPDF();
-                if(result.success){
-                    alert("Save sucessfully.");
+            try{// try mean execute the code inside see if there is any error, if yes, go to catch
+                const result = await window.anyapi.SaveAsPDF(); // tell ipcMain to printToPDF, i will use ipcrenderer.invoke to received reply of success saving
+                if(result.success){// log the reply
+                    console.log("Save sucessfully.");
+                    
                 }
-                else { alert("Failure!");}
+                else { console.log("Failure!"); //log the reply
+                    
+                }
 
-            }catch(err){
+            }catch(err){//any unexpected error will log the error and prevent code from further execute
                 console.error(err);
             }
         }
 
-        Saving(false);
+        Saving(false);//reset the saving state to indicate finish saving and allow for next save
     }
     
-    //this is for the new child page print preview, discarded due to the page cant properly display page break thus, pointles to have
+    //this is for the open new child page print preview, discarded due to the page cant properly display page break thus, pointles to have
     /*function fnPrintPreview(){ 
         const report = {printdata: dataresult,
                         reportinfo: Criteria
@@ -87,8 +90,10 @@ export default function PrintPage(){
 
     return(
         <>
-        <Container className="hide-it">
+        <Container className="hide-it"> {/*make the whole page at middle */}
+            {/*upper part of the page, search box and mui datagrid box */}
         <Box className="no-print" sx={{display:'flex', justifyContent:'center',gap:3}}>
+            {/*searhbox */}
             <Box sx={{background:'white', p:2, boxShadow:4, maxWidth:'40vw',minWidth:'300px'}}>
                 <form onSubmit={Search}>
                 <Stack spacing={1}>
@@ -110,10 +115,16 @@ export default function PrintPage(){
                 </Stack>
                 </form>
             </Box>
+
+            {/*mui datagrid box */}
             <Box sx={{background:'white', boxShadow:4, overflow:'auto',flexShrink:1,minWidth:"150px"}}>
+                {/*this DataGrid component is from mui material, row mean result, column mean header(need unique id), slotProps mean the custom action slot in btm */}
+                {/*datagrid is form automatically. it is a premade table*/}
                 <DataGrid rows={dataresult} columns={datacolumn} initialState={{pagination:{paginationModel}}} pageSizeOptions={[4]} slotProps={{pagination:{labelRowsPerPage:""}}}/>
             </Box>
         </Box>
+
+        {/*btm part of the page, report preview, the <printpreview/> is custom component*/}
         <Box className="hide-it" sx={{display:'flex',minHeight:'29.7cm', justifyContent:'center'}}>
             {dataresult?.length >0 && <PrintPreview datatable={dataresult} reportdata={Criteria}/>}
             

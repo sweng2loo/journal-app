@@ -132,9 +132,9 @@ class AppDataBase{
             sql += ' AND SpecialRemark LIKE ?';
             value.push(`%${criteria.SpecialRemark}%`);
         }
-        if(criteria.ForPrint === true){
+        if(criteria.ForPrint === true){ // custom flag for finally arrange according to date
              sql += ' ORDER BY DisDate ASC';
-        }else{sql += ' ORDER BY DisDate DESC';}  //finally arrange according to date
+        }else{sql += ' ORDER BY DisDate DESC';}  
 
 
         const stmt = this.Jrecordbase.prepare(sql); // prepare sql statement for run

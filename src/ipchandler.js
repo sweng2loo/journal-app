@@ -57,29 +57,34 @@ export default function Setuphandler(db){
 
     ipcMain.handle('search-records', async(event,criteria)=> {return await db.SearchwithCriteria(criteria)}); // for search the database using search criteria
 
-    ipcMain.handle('save-as-pdf',async(event)=>{
-        const win = BrowserWindow.fromWebContents(event.sender);
+    ipcMain.handle('save-as-pdf',async(event)=>{// need to tell the renderer it is sucess so use invoke and handle
+        const win = BrowserWindow.fromWebContents(event.sender);// set the mainwindow that need to execute this action, which is from who send it
          // if declared with {filePath}, it mean temporary nameless object but with filePath as key
         // also the dialog return an object with 2 key {filePath: ?? , canceled:??} 
         // so it is strictly filePath as key or else it will not work
 
             const  Pdfpath = await dialog.showSaveDialog(win, { 
-               
-              title: 'Save As PDF',
-              defaultPath: 'journalreport.pdf',
-              filters: [{name:'PDF file',extensions:["pdf"]}]
+               //win mean, set this dialog as modal of mainwindow, to prevent action in mainwindow
+              title: 'Save As PDF', // title of this dialog
+              defaultPath: 'journalreport.pdf', // default path to save, normally is in download folder
+              filters: [{name:'PDF file',extensions:["pdf"]}] //  set the  extension selection for the option in right bottom corner
         
             });
         
-            if (!Pdfpath.filePath) {return {success:false, reason:'cancel'};
+            if (!Pdfpath.filePath) {//if there is no filepath, which mean calcelled or no such file path 
+                 dialog.showMessageBox(win, {message:"Failure"}) //show electron own dialog messagebox, there are many optional argument you can find in their website
+                //using electron messegabox instead of alert() is due to electron not support the alert() and will freeze the input box
+                 return {success:false, reason:'cancel'};
           }
-            const data = await win.webContents.printToPDF({
-                preferCSSPageSize: true
+          // if there is filePath which mean you selected a file Path
+            const data = await win.webContents.printToPDF({ // print to pdf
+                preferCSSPageSize: true // use Css @page instead of default printToPDF design
             });
         
-            await fs.promises.writeFile(Pdfpath.filePath, data);
+            await fs.promises.writeFile(Pdfpath.filePath, data); //write file to disk, promises is to wait for it to finish before execute next
+            dialog.showMessageBox(win, {message:"Save Successfully"}) // electron message box
 
-            return {success: true};
+            return {success: true}; //tell the renderer it is success
 
 
     })

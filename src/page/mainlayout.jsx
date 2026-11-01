@@ -27,7 +27,7 @@ export default function Mainlayout(){
                 </Toolbar>
             </AppBar>
 
-            {/* the main background with checker box design */}
+            {/* the main background with checker box design , className is use for apply the css setting when printing*/}
             <Box className="hide-it" component="main" sx={{flexGrow:1, p:2, backgroundImage: 'repeating-conic-gradient(#e0f7fa 0% 25%, #ffffff 25% 50%)', backgroundSize: '60px 60px', minWidth:0, width:'100%', overflowX: "auto"}}>
               
                 <Outlet/>

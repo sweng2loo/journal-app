@@ -2,8 +2,8 @@
 
 
 .on-paper {
-    background:white !important;
-    min-height: 29.7cm !important;
+    background:white !important; /* !important is used for priority use this properties. use this because normally mui material properties will overide css,*/
+    min-height: 29.7cm !important;/*!important is used for prevent override from mui or other 3rd parties html material*/
     width: 21cm;
     box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.15) !important;
     align-items: center !important;
@@ -12,7 +12,7 @@
     
     
 
-        & .title {
+        & .title { /* the & mean look inside the parent component (previous level) similar outcome can be achieve by .on-paper .title {}*/
             text-align: center !important;
             margin-bottom: 2cm !important;
 
@@ -77,34 +77,46 @@
         }
     }     
 
+    /*@media has 3 type, print, screen or all, normal css without it is actually @media all*/
+    /* '@media all' or normal .css code will be use as default design if not state otherwise*/
+    /* '@media screen' properties will overide or add into the '@media all' properties when display in device screen  */
+    /* '@media print" is similar, it will overide or add into the '@media all' properties when printing or save as pdf*/
+    @media print { /*this will only apply when printing or save in pdf*/
 
-    @media print {
-
-        .no-print {
-            display: none !important;
-
+        .no-print {/* override or add properties below to the default css design*/
+            display: none !important;  /*this is added to default css properties because it doesnt exist in default css properties as coded as above*/
+            /* display: none  meaning do not display the entire html with this class(for html)or className(when used in javascript)*/
         }
 
-        .hide-it {
-            display: contents !important;
+        .hide-it { 
+            display: contents !important;/* using !important prevent override by mui sx={{}}, then use this 'display' properties for the html*/
+            /* 'contents' mean that remove the this component(this is a parent) and only show its children component*/
         }
 
-        
-        @page {
+        /*@page will only apply when page can be display */
+        @page { /*it normally will active when in printing or pagepreview(require proper tool or extension)*/
             size: A4;
             margin: 2cm; 
         }
 
-
+        /*most of the properties here are overriding the properties when printing due to using '@media print' */
         .on-paper{
-            box-shadow: none !important;
-            padding:1px !important;
-            margin-top: 0 !important;
+            box-shadow: none !important; /* previous declared 10px being override to none when printing */
+            padding:1px !important; /*set to 1px becuase @page already set the margin, and leave only 1px is to prevent the margin eat the table border due to limit*/
+            margin-top: 0 !important;/*/*previous margin-top is 20px as declared at top  of this file, */
         }
 
 
         .row-data {
-            break-inside: avoid !important ;
+            break-inside: avoid !important ; /* break-inside meaning make page break inside the content*/
+            /*'avoid' mean do not use page break inside this component, must keep whole component intact*/
+        }
+
+        /*the selector after the : will allow more precise component seletion to apply the properties, in this case, it is select the last row of this component with this className or class*/
+        .row-data:last-child { 
+            /*the existance of ' ' after the ':' is important, with space like ': ' will mean the last child component of this className which mean the last <tablecell> of this row-data*/
+            /*however without the space like this it only affect the last component of this className which is the last row-data component  */
+            break-after: avoid !important ; /*this is use to prevent pagebreak after the last child which indirectly prevent the last line of endnote after this component being push to new page alone*/
         }
 
       

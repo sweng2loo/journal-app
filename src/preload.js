@@ -25,7 +25,7 @@ ReceiveSquery(action){ // listen for the search query receive from ipcmain and s
     ipcRenderer.on('view-search',listenforSquery );// then execute the listener function when ipcmain sent the signal 
     return () => {ipcRenderer.removeListener('view-search',listenforSquery)};// create a temporary function to stop listener function and return it to frontend to enable control from frontend
 },
-async SaveAsPDF(){ return await ipcRenderer.invoke('save-as-pdf')},
+async SaveAsPDF(){ return await ipcRenderer.invoke('save-as-pdf')}, // tell main to printToPDF with current window content, use invoke to received reply of success or failure
 
 //this two function is discarded as related to child page print preview which is current unnecessary due to no page break display
 //Printpreview(page, report){ipcRenderer.send('print-preview', page, report)}, // request to open child page for preview, send the report and criteria over ipcMain

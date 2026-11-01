@@ -39,8 +39,8 @@ export default function App(){
   );
 }
 
-const appstart = document.getElementById("root");
+const appstart = document.getElementById("root"); // select the html component 
 
-const root = createRoot(appstart);
+const root = createRoot(appstart); // createRoot at html component  as entry point
 
-root.render(<App/>)
+root.render(<App/>) // render the entire app

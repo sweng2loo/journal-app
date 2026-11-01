@@ -10,10 +10,12 @@ export default function PrintPreviewPage(){
     const [preview, setpreview] = useState(null);
     const [otherinfo, setotherinfo] = useState(null);
 
-    function HideOnScrolls(contentinside){
-        const {children} = contentinside;
-        const trigger = useScrollTrigger();
+    function HideOnScrolls(contentinside){// this is the component for hiding the appbar when scrolldown
+        const {children} = contentinside; // this is thing that want to hide
+        const trigger = useScrollTrigger(); // useScrollTrigger will make the scroll action become trigger for an action 
 
+
+        //slide is use for hiding the the children component with animation, return statement is for this function to create this component
         return(<Slide appear={false} direction="down" in={!trigger}>
                 {children}
         </Slide>);
@@ -21,7 +23,8 @@ export default function PrintPreviewPage(){
 
 
 
-    useEffect(()=>{
+    useEffect(()=>{// use for receive the data and set the data for report preview ,
+        //switch off the listener after exit or renew using retrun statement
         const clearlistener = window.anyapi.waitforpreview((report)=>{
                         setpreview(report.printdata);
                         setotherinfo(report.reportinfo) ;  
@@ -31,7 +34,7 @@ export default function PrintPreviewPage(){
     
     return(
         <>
-        <HideOnScrolls className="no-print">
+        <HideOnScrolls className="no-print"> {/*hide the app bar when scroll down */}
             <AppBar className='no-print' sx={{background:"#444444"}} elevation={10} >
                 <Toolbar sx={{position:'relative', display:'flex', width:'100%'}}>
                     <Typography  variant="h4"  sx={{color:"white",position:'absolute', left: '50%', transform: 'translateX(-50%)'}}> Print Preview</Typography>
@@ -41,8 +44,8 @@ export default function PrintPreviewPage(){
         </HideOnScrolls>
         <Toolbar className="no-print"/>
 
-            <Container className="hide-it" sx={{display:'flex', justifyContent:'center'}}>
-             <PrintPreview className="printable" datatable={preview} reportdata={otherinfo}/>
+            <Container className="hide-it" sx={{display:'flex', justifyContent:'center'}}> {/*use to center the component*/}
+             <PrintPreview className="printable" datatable={preview} reportdata={otherinfo}/> {/*report preview*/}
             </Container>
         </>
         
