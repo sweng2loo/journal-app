@@ -38,7 +38,7 @@ export default function PrintPreview({datatable,reportdata}){//component for a A
                                     </TableCell>
                                     <TableCell className="celldata" >
                                         <Box >{rows.Particulars}</Box>
-                                        {rows.imgpath && <Box component="img" src={`image://${rows.imgpath}`} alt="" sx={{height:'160px', width:'240px', objectFit:'cover'}}/>}
+                                        {rows.imgpath && <Box component="img" src={`image://nousefolder/${rows.imgpath}`} alt="" sx={{height:'160px', width:'240px', objectFit:'cover'}}/>}
                                         <Box className="sp-remark">Sp remark:  {rows.SpecialRemark}</Box>
                                     </TableCell>
                                     <TableCell className="celldata">
