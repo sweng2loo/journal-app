@@ -27,7 +27,7 @@ export default function Records(){
         setmode(change); // all setter function of react will only execute at the end of funtion not matter where it is.
         if(change === true){// so track change variable instead of the editmode
         const selectedrecord = temprecordstable[recordindex]; //extract current viewing record data 
-        const imgbeforupdate = `image://${temprecordstable[recordindex].imgpath}`; // extract current viewing record imgpath for preview only, file itself is too difficult to be extract using path
+        const imgbeforupdate = `image://nousefolder/${temprecordstable[recordindex].imgpath}`; // extract current viewing record imgpath for preview only, file itself is too difficult to be extract using path
         previewchange(imgbeforupdate); //set the preview in editmode **this is for the preview box only, no file is actually selected for the input
         updateimg(null); // clear the selected input img each times enter editmode
         setedit(selectedrecord);}//set the record data into all the inputbox except img file
