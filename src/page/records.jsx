@@ -147,8 +147,8 @@ export default function Records(){
                 <Box sx={{display:'flex', justifyContent:'center', alignItems:'center'}}>
                         {!editmode && //prev and next button      at the img box, because electron doesnt allow direct load from local machine, it require set up new priviledge with certain accessing method, go to main.js **protocol to know more 
                         <Fab color='primary'onClick={PrevRecords} disabled={recordindex === 0}><ArrowBackIos/></Fab>}
-                        <Box component="img" src={editmode ? preview : temprecordstable[recordindex]?.imgpath ? `image://${temprecordstable[recordindex]?.imgpath}` : Picture} alt="No image found" sx={{height:'50vh', width: ' 40vw', mx:2}}/>
-                        {/* the preview box, is not related to the input box. due to ipc, accesing img require special protocol declaration(special privilige) in ipc main and special "img://" protoco.handle */}
+                        <Box component="img" src={editmode ? preview : temprecordstable[recordindex]?.imgpath ? `image://nousefolder/${temprecordstable[recordindex]?.imgpath}` : Picture} alt="No image found" sx={{height:'50vh', width: ' 40vw', mx:2}}/>
+                        {/* the preview box, is not related to the input box. due to ipc, accesing img require special protocol declaration(special privilige) in ipc main and special "img://" protoco.handle, then use the dummyfolder name to prevent some chromium change the path name due to some domain thing, in this case i named it 'nousefolder' */}
                         {!editmode && 
                         <Fab color='primary' onClick={NextRecords} disabled={recordindex === temprecordstable.length - 1 || istableempty()}><ArrowForwardIos/></Fab>}    
                 </Box> 

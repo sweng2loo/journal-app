@@ -11,7 +11,7 @@ import Deleteimgfile from './filerelatedfunction/deleteimgfile';
 //**protocol- this set the privilege meaning the permission to access thing with specific word store in scheme, so when it see "scheme://" then it grant special permission
 protocol.registerSchemesAsPrivileged([{
   scheme: 'image',
-  privileges :{secure:true, supportFetchAPI:true,bypassCSP:true}
+  privileges :{secure:true, supportFetchAPI:true,bypassCSP:true, standard:true}
 }]);
 
 let mainWindow; // declare as global to enable control of child windows from main window 
@@ -131,24 +131,30 @@ async function deleterecord(event, id){
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   // the protocol.handle listen the signal with "image://"(**which defined in the protocol at top)  and execute some function with request as parameter before return something to the request sender.
-  protocol.handle('image',(request) =>{
+  protocol.handle('image',(request) =>{ // the request also hold the value of the whole image://${thevalue}
     //this decode the uri component (**meaning translate all special charater for computer to read properly) 
     // and the replace function replace(/anything inside/, 'with this') 
     // the '^' mean need to in exact same order, 
-    // the "\" mean "/" but avoid closing just like relationhip when '' inside "" 
+    // the "\" mean the next character is special specific thing such as \n is newline, in this case , it mean "/" but avoid closing just like relationhip when '' inside "" 
     // "+" mean any same character as before after it also count
     // finally close with"/", 
     // i or g or m is decide whether it case sensitive meaning can a be A or must be a
-    // so it actually mean replace      "image://"    the // at the end can be more than 1, must be in this order and case insensitive 
-    const changemediapath = decodeURIComponent(request.url.replace(/^image:\/+/i, ''));
+    // so it actually mean replace      "image://nousefolder/"    the // at the end can be more than 1, must be in this order and case insensitive 
+    
+    let changemediapath = decodeURIComponent(request.url.replace(/^image:\/\/nousefolder\/+/i, ''));
+    
 
-
-   //this add the / to the front if there isnt any at first 
-    const absolutePath = changemediapath.startsWith('/') ? changemediapath : `/${changemediapath}`;
+    if (process.platform !== 'win32'){// it check  if the OS is Window, 'win32' is the value represent window OS 
+        if(!changemediapath.startsWith('/')){//if it is not, then check whether the modified path start with '/' because linux and Mac path need to start with it
+          changemediapath = `/${changemediapath}`; // if not, the add the / in front of it.
+        }
+    }// if the OS is window, just use the modified path directly
 
 
   // finally use the fetch to send back to the request location with granted permission
-    return net.fetch(pathToFileURL(absolutePath).href);
+  //pathtofileurl() is use for convert local file into URL for web browser to properly read it
+  // net.fetch is electron function to read local file by security reason due to it is mainly a web browser
+    return net.fetch(pathToFileURL(changemediapath).href);
   });
   recorddb = new AppDataBase(); // construct the database 
   Setuphandler(recorddb) // refer to ipchandler.js to listen to the event from ipc renderer its use for all main process function request from frontend. its the same as all ipcMain function as below, only group into a file and call it for easier management
