@@ -1,10 +1,10 @@
 import { Box, Button, Container, Fab, Stack, Typography } from "@mui/material";
-import Datadisplaybox from "../component /Datadisplaybox";
+import Datadisplaybox from "../component/Datadisplaybox";
 import { ArrowBackIos, ArrowForwardIos, CachedRounded, DeleteForeverRounded, EditRounded, NoteAddRounded } from "@mui/icons-material";
 import { useCallback, useEffect, useState } from "react";
-import Imgupbtn from "../component /imgupbtn";
-import Inputbox from "../component /Inputbox";
-import Dateinputbox from "../component /Dateinputbox";
+import Imgupbtn from "../component/imgupbtn";
+import Inputbox from "../component/Inputbox";
+import Dateinputbox from "../component/Dateinputbox";
 import {  useLocation, useParams } from "react-router";
 import Picture from '../pic/noimg.png';
 

@@ -1,9 +1,9 @@
 import { Box, Button, Container, Stack, Typography,} from "@mui/material";
-import Dateinputbox from "../component /Dateinputbox";
-import Inputbox from "../component /Inputbox";
+import Dateinputbox from "../component/Dateinputbox";
+import Inputbox from "../component/Inputbox";
 import { useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import PrintPreview from "../component /printpreview";
+import PrintPreview from "../component/printpreview";
 
 
 

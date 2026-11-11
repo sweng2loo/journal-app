@@ -1,6 +1,6 @@
 import { Button, Box, Stack, AppBar, Toolbar, Typography, Container, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper} from "@mui/material";
-import Inputbox from "../component /Inputbox";
-import Dateinputbox from "../component /Dateinputbox";
+import Inputbox from "../component/Inputbox";
+import Dateinputbox from "../component/Dateinputbox";
 import { useState } from "react";
 
 

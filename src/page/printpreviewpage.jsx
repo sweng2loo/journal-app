@@ -1,5 +1,5 @@
-import Button from "@mui/material/Button";
-import PrintPreview from "../component /printpreview";
+
+import PrintPreview from "../component/printpreview";
 import { useEffect, useState } from "react";
 import { AppBar, Container, IconButton, Slide, Toolbar, Typography, useScrollTrigger } from "@mui/material";
 import { PrintOutlined } from "@mui/icons-material";

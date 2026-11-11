@@ -1,9 +1,9 @@
 
 import { AppBar, Box, Button, Container, Stack, Toolbar, Typography } from "@mui/material";
-import Inputbox from "../component /Inputbox";
-import ImageUpload from "../component /imageupload";
+import Inputbox from "../component/Inputbox";
+import ImageUpload from "../component/imageupload";
 import { useState } from "react";
-import Dateinputbox from "../component /Dateinputbox";
+import Dateinputbox from "../component/Dateinputbox";
 
 
 export default function Entry(){

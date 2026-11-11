@@ -1,7 +1,7 @@
 
-import { AppBar, Toolbar,Box, Typography, IconButton, colors } from "@mui/material";
+import { AppBar, Toolbar,Box, Typography} from "@mui/material";
 import {  Outlet, useNavigate } from "react-router";
-import Backbutton from "../component /backbutton";
+import Backbutton from "../component/backbutton";
 import { useEffect } from "react";
 import "../css/printpage.css"
 
