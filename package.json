@@ -2,8 +2,9 @@
   "name": "journalapp",
   "productName": "journalapp",
   "version": "1.0.0",
+  "type": "module",
   "description": "journalappforlearning",
-  "main": ".vite/build/main.js",
+  "main": ".vite/build/main.cjs",
   "private": true,
   "scripts": {
     "start": "electron-forge start",
@@ -16,15 +17,15 @@
   "author": "sweng",
   "license": "MIT",
   "devDependencies": {
-    "@electron-forge/cli": "^7.11.2",
-    "@electron-forge/maker-deb": "^7.11.2",
-    "@electron-forge/maker-rpm": "^7.11.2",
-    "@electron-forge/maker-squirrel": "^7.11.2",
-    "@electron-forge/maker-zip": "^7.11.2",
-    "@electron-forge/plugin-auto-unpack-natives": "^7.11.2",
-    "@electron-forge/plugin-fuses": "^7.11.2",
-    "@electron-forge/plugin-vite": "^7.11.2",
-    "@electron/fuses": "^1.8.0",
+    "@electron-forge/cli": "^8.0.1",
+    "@electron-forge/maker-deb": "^8.0.1",
+    "@electron-forge/maker-rpm": "^8.0.1",
+    "@electron-forge/maker-squirrel": "^8.0.1",
+    "@electron-forge/maker-zip": "^8.0.1",
+    "@electron-forge/plugin-auto-unpack-natives": "^8.0.1",
+    "@electron-forge/plugin-fuses": "^8.0.1",
+    "@electron-forge/plugin-vite": "^8.0.1",
+    "@electron/fuses": "^2.1.3",
     "electron": "44.4.2",
     "vite": "^8.3.0"
   },
@@ -42,5 +43,10 @@
     "react-day-picker": "^10.0.1",
     "react-dom": "^19.3.0",
     "react-router": "^8.4.0"
+  },
+  "allowScripts": {
+    "electron@44.4.2": true,
+    "better-sqlite3@13.0.3": true,
+    "electron-winstaller@5.4.4": true
   }
 }
